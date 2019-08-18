@@ -13,6 +13,8 @@ class CheckListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
         // Replace previous code with the following
         let item1 = ChecklistItem()
         item1.text = "Walk the dog"
@@ -32,7 +34,18 @@ class CheckListViewController: UITableViewController {
         item5.text = "Eat ice cream"
         items.append(item5)
     }
-
+    
+    // MARK:- Actions
+    @IBAction func addItem() {
+        let newRowIndex = items.count
+        let item = ChecklistItem()
+        item.text = "I am a new row"
+        items.append(item)
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        
+    }
     // MARK:- Table view data source
     override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
