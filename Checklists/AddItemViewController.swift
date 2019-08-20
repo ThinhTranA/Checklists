@@ -19,6 +19,7 @@ class AddItemViewController: UITableViewController, UITextViewDelegate {
 
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var textField: UITextField!
+    
     weak var delegate: AddItemViewControllerDelegate?
 
     override func viewDidLoad() {
