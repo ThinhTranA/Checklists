@@ -11,12 +11,12 @@ import UIKit
 class CheckListViewController: UITableViewController, AddItemViewControllerDelegate {
     
     // MARK:- Add Item ViewController Delegates
-    func addItemViewControllerDidCancel(
-        _ controller: AddItemViewController) {
+    func itemDetailViewControllerDidCancel(
+        _ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated:true)
     }
-    func addItemViewController(
-        _ controller: AddItemViewController,
+    func itemDetailViewController(
+        _ controller: ItemDetailViewController,
         didFinishAdding item: ChecklistItem) {
         let newRowIndex = items.count
         items.append(item)
@@ -25,8 +25,8 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
         tableView.insertRows(at: indexPaths, with: .automatic)
         navigationController?.popViewController(animated:true)
     }
-    func addItemViewController(
-        _ controller: AddItemViewController,
+    func itemDetailViewController(
+        _ controller: ItemDetailViewController,
         didFinishEditing item: ChecklistItem) {
         if let index = items.index(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
@@ -63,6 +63,15 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
         items.append(item5)
     }
     
+    func documentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory,
+                                             in: .userDomainMask)
+        return paths[0]
+    }
+    func dataFilePath() -> URL {
+        return documentsDirectory().appendingPathComponent(
+            "Checklists.plist")
+    }
     // MARK:- Navigation
     override func prepare(for segue: UIStoryboardSegue,
                           sender: Any?) {
@@ -70,12 +79,12 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
         if segue.identifier == "AddItem" {
             // 2
             let controller = segue.destination
-                as! AddItemViewController
+                as! ItemDetailViewController
             // 3
             controller.delegate = self
             } else if segue.identifier == "EditItem" {
                 let controller = segue.destination
-                    as! AddItemViewController
+                    as! ItemDetailViewController
                 controller.delegate = self
                 if let indexPath = tableView.indexPath(
                     for: sender as! UITableViewCell) {
