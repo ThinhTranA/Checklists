@@ -49,7 +49,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="wBB-1J-ExV" kind="show" trigger="accessoryAction" id="B5k-Ac-a6P"/>
+                                    <segue destination="wBB-1J-ExV" kind="show" identifier="EditItem" trigger="accessoryAction" id="B5k-Ac-a6P"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -151,6 +151,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aQn-lZ-4kb"/>
+        <segue reference="B5k-Ac-a6P"/>
     </inferredMetricsTieBreakers>
 </document>
