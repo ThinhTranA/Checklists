@@ -14,6 +14,10 @@ protocol AddItemViewControllerDelegate: class {
     func addItemViewController(
         _ controller: AddItemViewController,
         didFinishAdding item: ChecklistItem)
+    func addItemViewController(
+        _ controller: AddItemViewController,
+        didFinishEditing item: ChecklistItem)
+    
 }
 class AddItemViewController: UITableViewController, UITextViewDelegate {
 
@@ -29,6 +33,7 @@ class AddItemViewController: UITableViewController, UITextViewDelegate {
         if let item = itemToEdit {
             title = "Edit Item"
             textField.text = item.text
+            doneBarButton.isEnabled = true
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -40,11 +45,16 @@ class AddItemViewController: UITableViewController, UITextViewDelegate {
         delegate?.addItemViewControllerDidCancel(self)
     }
     @IBAction func done() {
-        let item = ChecklistItem()
-        item.text = textField.text!
-        delegate?.addItemViewController(self, didFinishAdding: item)
+        if let item = itemToEdit {
+            item.text = textField.text!
+            delegate?.addItemViewController(self,
+                                            didFinishEditing: item)
+        } else {
+            let item = ChecklistItem()
+            item.text = textField.text!
+            delegate?.addItemViewController(self, didFinishAdding: item)
+        }
     }
-    
     // MARK:- Table View Delegates
     override func tableView(_ tableView: UITableView,
                             willSelectRowAt indexPath: IndexPath)
